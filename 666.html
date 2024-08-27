@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cursed Clock</title>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			background-color: #220000;
+		}
+
+		#clock{
+			font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+			font-size: 10em;
+			font-weight: 800;
+			margin: auto;
+			color: #e9b0b0;
+		}
+	</style>
+	</head>
+	<body>
+		<div id="clock">
+			00:00:00
+		</div>
+		<script lang="js">
+			let clock = document.getElementById("clock");
+			const secondsRatio = (6*66*666) / (24*60*60);
+
+			function updateClock(){
+				const date = new Date();
+				const totalSeconds = (date.getHours() * 60 * 60) + (date.getMinutes() * 60) + date.getSeconds() + (date.getMilliseconds()/1000);
+				let octalTotalSeconds = totalSeconds * secondsRatio;
+				const hours = Math.floor(octalTotalSeconds / (66 * 666));
+				octalTotalSeconds -= hours * 66 * 666;
+				const minutes = Math.floor(octalTotalSeconds / 666);
+				octalTotalSeconds -= minutes * 666;
+				clock.innerHTML = `${("00" + hours).slice(-1)}:${("000" + minutes).slice(-2)}:${("00" + Math.floor(octalTotalSeconds)).slice(-3)}`;
+			};
+
+			updateClock();
+			setInterval(updateClock, 100 * secondsRatio);
+		</script>
+	</body>
+</html>
